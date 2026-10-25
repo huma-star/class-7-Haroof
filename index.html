@@ -1,0 +1,492 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>حرف کا سبق</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* جمیل نوری نستعلیق: کمپیوٹر میں انسٹال ہو، یا فونٹ فائل (JameelNooriNastaleeq.ttf) اسی فولڈر میں رکھ دیں */
+@font-face{font-family:'JNN';src:local('Jameel Noori Nastaleeq'),local('JameelNooriNastaleeq');}
+:root{--y:#ffd24d;--b:#3b5bdb;--r:#e8334a;--g:#2fb36b;--p:#7b4bdb;--o:#ff8a3d;--ink:#26304a;}
+*{box-sizing:border-box;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+input,textarea,select{-webkit-user-select:text;user-select:text}
+html{scroll-behavior:smooth}
+body{margin:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));background-color:#f3f6ff;font-family:'JNN','Jameel Noori Nastaleeq','Noto Nastaliq Urdu',serif;line-height:2.3;color:var(--ink);
+background:linear-gradient(180deg,#e8f3ff 0%,#fff7e0 45%,#ffeef2 100%);font-size:19px;overflow-x:hidden}
+.h{color:var(--r);font-weight:bold}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:0;line-height:2}
+/* بالائی پٹی */
+#bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:#fff;box-shadow:0 3px 14px #0002}
+#bar .in{display:flex;align-items:center;gap:8px;padding:2px 12px;overflow-x:auto;white-space:nowrap}
+#bar a{color:var(--b);text-decoration:none;padding:0 10px;border-radius:20px;font-size:16px}
+#bar a:hover{background:#e7ecff}
+#pts{margin-inline-start:auto;background:var(--y);padding:0 14px;border-radius:20px;font-weight:bold;flex:none}
+#prog{height:5px;background:linear-gradient(90deg,var(--g),var(--y),var(--r));width:0;transition:width .2s}
+/* مرکزی */
+.wrap{max-width:980px;margin:auto;padding:14px}
+.card{background:#fff;border-radius:26px;padding:20px 22px;margin:22px 0;box-shadow:0 8px 26px #3b5bdb22;border:3px solid #fff;position:relative;overflow:hidden}
+.title{display:inline-block;background:var(--y);padding:0 26px;border-radius:16px;font-size:28px;font-weight:bold;margin:0 0 8px}
+.tag{display:inline-block;background:var(--b);color:#fff;padding:0 18px;border-radius:10px 22px 10px 22px;font-size:17px}
+.note{background:#fff9d6;border-right:7px solid var(--y);padding:6px 16px;border-radius:12px;margin:10px 0}
+.btn{background:var(--b);color:#fff;padding:2px 22px;border-radius:30px;box-shadow:0 5px 0 #25399a;transition:.15s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #25399a}
+.btn.g{background:var(--g);box-shadow:0 5px 0 #1d7f4b}.btn.o{background:var(--o);box-shadow:0 5px 0 #b35412}.btn.p{background:var(--p);box-shadow:0 5px 0 #4f2d9a}
+.chip{background:#eef2ff;color:var(--b);padding:0 18px;border-radius:30px;margin:4px;border:2px solid #cfd8ff;transition:.15s;display:inline-block}
+.chip:hover{transform:scale(1.08)}.chip.on{background:var(--b);color:#fff}
+.chip.sel{background:var(--y);color:#222;border-color:#e0b000;transform:scale(1.1)}
+.chip.bad{background:#ffe1e5;border-color:var(--r);color:var(--r)}
+.chip.good{background:#d8f8e6;border-color:var(--g);color:#0e7a40}
+.shake{animation:shk .4s}
+@keyframes shk{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+.msg{min-height:50px;font-weight:bold}
+/* ہیرو */
+.hero{text-align:center;background:linear-gradient(180deg,#8fd3ff,#d8f1ff 60%,#fff);padding-bottom:0}
+.hero h1{font-size:74px;margin:0;color:#fff;text-shadow:3px 4px 0 var(--b),6px 8px 0 #0002;animation:pop 1.2s ease-in-out infinite alternate;line-height:1.7}
+@keyframes pop{to{transform:scale(1.07) rotate(-2deg)}}
+.hero p{font-size:22px;margin:0 0 6px}
+.hero svg{width:100%;max-height:230px}
+.bird{animation:fly 6s linear infinite}.bird2{animation:fly 9s linear infinite 2s}
+@keyframes fly{from{transform:translateX(-120px)}to{transform:translateX(900px)}}
+.sun{animation:spin 20s linear infinite;transform-origin:760px 55px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.float{position:fixed;pointer-events:none;font-size:30px;opacity:.5;z-index:0;animation:fl 14s linear infinite}
+@keyframes fl{from{transform:translateY(105vh) rotate(0)}to{transform:translateY(-15vh) rotate(360deg)}}
+/* درخت */
+.tree{text-align:center}
+.tr0{display:inline-block;background:linear-gradient(#ffe1a8,#ffb84d);border:2px solid #ff9a1f;padding:0 34px;border-radius:12px;font-size:24px;font-weight:bold}
+.vl{width:3px;height:22px;background:#ff9a1f;margin:auto}
+.trow{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;border-top:3px solid #ff9a1f;padding-top:16px;position:relative}
+.tn{background:linear-gradient(#ffe9c7,#ffd08a);border:2px solid #ff9a1f;border-radius:10px;padding:0 20px;font-size:21px;transition:.2s}
+.tn:hover{transform:translateY(-5px)}.tn.on{background:var(--r);color:#fff;border-color:var(--r);transform:scale(1.15)}
+.tn.glow{animation:gl 1.4s infinite}
+@keyframes gl{50%{box-shadow:0 0 18px 5px var(--y)}}
+.info{background:#f3f6ff;border-radius:18px;padding:8px 18px;margin-top:14px;min-height:96px;font-size:20px}
+/* تعریف */
+.dfn{background:#fff9d6;border-radius:18px;padding:8px 20px;border:3px dashed var(--y);font-size:21px}
+.dfn b.k{background:var(--y);padding:0 14px;border-radius:8px;margin-inline-start:8px}
+.demo{text-align:center;margin:14px 0}
+.dsent{font-size:28px;background:#eaf7ff;padding:6px 14px;border-radius:18px;display:inline-block;transition:.4s}
+.dsent.broken{background:#ffe9e9;letter-spacing:3px}
+.dsent .gap{display:inline-block;min-width:70px;color:#c33;animation:blk 1s infinite}
+@keyframes blk{50%{opacity:.2}}
+/* پل کھیل */
+.game{background:linear-gradient(180deg,#f0fbff,#e5f7ea);border-radius:22px;padding:10px 16px;margin:14px 0;border:3px solid #c6ecd6}
+.game h3{margin:4px 0;color:var(--g)}
+.scene{display:flex;align-items:center;justify-content:center;gap:0;margin:10px 0;flex-wrap:wrap}
+.isl{background:linear-gradient(#7fe08f,#3ba95a);border-radius:40px 40px 18px 18px;padding:2px 22px;color:#fff;font-size:24px;font-weight:bold;box-shadow:0 8px 0 #8a5a2b;text-shadow:0 2px 0 #0003}
+.slot{min-width:92px;text-align:center;border:3px dashed #aaa;border-radius:12px;margin:0 -4px;padding:0 12px;font-size:24px;background:#fff;color:#aaa;transition:.4s;z-index:1}
+.slot.ok{border:3px solid #8a5a2b;border-style:solid;background:repeating-linear-gradient(90deg,#d9a566 0 14px,#c58d4c 14px 17px);color:var(--r);font-weight:bold;transform:scaleX(1.15)}
+.opts{text-align:center}
+.rd{color:#777;font-size:16px;text-align:center}
+/* فلپ کارڈز */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.fc{perspective:900px;height:230px;cursor:pointer}
+.fi{position:relative;height:100%;transition:transform .7s;transform-style:preserve-3d}
+.fc.on .fi{transform:rotateY(180deg)}
+.ff,.fb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px;color:#fff}
+.fb{transform:rotateY(180deg);background:#fff!important;color:var(--ink);border:4px solid;font-size:17px;line-height:2.1}
+.ff .em{font-size:50px;line-height:1.3}.ff b{font-size:24px}
+.rib{position:absolute;top:8px;left:8px;background:#fff;color:#222;font-size:13px;padding:0 10px;border-radius:12px;line-height:1.9}
+/* ٹیبز */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.tab{background:#eef2ff;color:var(--b);padding:0 18px;border-radius:14px;border:2px solid #cfd8ff}
+.tab.on{background:var(--b);color:#fff}
+.panel{background:#f6f8ff;border-radius:18px;padding:6px 16px;min-height:90px}
+.ex{background:#fff;border-radius:16px;margin-top:8px;padding:6px 18px;font-size:23px;border-right:6px solid var(--g);animation:fin .4s}
+@keyframes fin{from{opacity:0;transform:translateY(10px)}}
+/* ترتیب کھیل */
+.buckets{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
+.bk{border:3px dashed;border-radius:18px;padding:4px 8px;min-height:120px;text-align:center;cursor:pointer;transition:.2s}
+.bk:hover{background:#fff8dd}
+.bk h4{margin:0;font-size:19px}
+.bk .chip{cursor:default}
+/* کھوجی */
+.tk{background:#fff;border:2px solid #d5dcf5;border-radius:14px;padding:0 12px;margin:3px;font-size:25px;display:inline-block;transition:.15s}
+.tk:hover{background:#f0f3ff}.tk.sel{background:var(--y);border-color:#e0b000;transform:scale(1.08)}
+.tk.good{background:#d8f8e6;border-color:var(--g)}.tk.bad{background:#ffe1e5;border-color:var(--r);text-decoration:line-through}.tk.miss{background:#fff;border:3px dashed var(--o)}
+/* یادداشت */
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.mem .fc{height:96px}.mem .ff{background:linear-gradient(135deg,var(--p),var(--b));font-size:34px}
+.mem .fb{font-size:20px;line-height:1.8;padding:2px}
+.mem .fc.done .fb{background:#d8f8e6!important;border-color:var(--g)!important}
+@media(max-width:560px){.mem{grid-template-columns:repeat(3,1fr)}.hero h1{font-size:54px}body{font-size:17px}}
+/* ورک شیٹ */
+.ws-head{background:linear-gradient(90deg,var(--p),var(--b));color:#fff;border-radius:20px;padding:8px 20px;text-align:center}
+.ws-head h2{margin:0;font-size:30px}
+.nm{display:flex;gap:14px;flex-wrap:wrap;margin:12px 0}
+.nm label{flex:1;min-width:200px}
+input[type=text],textarea,select{width:100%;font-family:inherit;font-size:19px;border:2px solid #cfd8ff;border-radius:12px;padding:2px 12px;background:#fbfcff;line-height:2.1;color:var(--ink)}
+textarea{min-height:110px;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:3px solid #bcd0ff}
+select{width:auto;min-width:130px;display:inline-block}
+.lv{border-radius:22px;margin:18px 0;overflow:hidden;border:3px solid}
+.lv>.hd{padding:2px 18px;color:#fff;font-size:23px;font-weight:bold;display:flex;justify-content:space-between;flex-wrap:wrap}
+.lv>.bd{padding:6px 18px 12px;background:#fff}
+.q{padding:6px 12px;border-radius:14px;margin:10px 0;background:#fafbff;border:2px solid #eef0fb}
+.q.ok{border-color:var(--g);background:#effcf4}.q.no{border-color:var(--r);background:#fff1f3}
+.q .qt{font-weight:bold}
+.ans{display:none;margin-top:6px;font-size:17px;padding:2px 12px;border-radius:10px;background:#fff6d1}
+.q label.op{display:block;cursor:pointer;padding:0 8px;border-radius:10px}
+.q label.op:hover{background:#eef2ff}
+.q label.op input{width:auto;margin-inline-end:8px}
+#res{display:none;text-align:center;background:linear-gradient(135deg,#fff3c4,#e1f5ff);border-radius:24px;padding:12px;font-size:24px;border:4px solid var(--y)}
+#nopr{display:none}
+/* پرنٹ ممنوع */
+@media print{body *{display:none!important}body:before{content:'⛔ اس صفحے کو پرنٹ کرنے کی اجازت نہیں';display:block!important;font-size:30px;text-align:center;padding:40px}}
+.cf{position:fixed;top:-40px;font-size:28px;z-index:99;pointer-events:none;animation:cfa 3s ease-in forwards}
+@keyframes cfa{to{transform:translateY(112vh) rotate(720deg);opacity:.9}}
+.foot{text-align:center;color:#778;padding:20px;font-size:15px}
+
+body::before{content:'';position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:#fff}
+</style>
+
+
+<div id="bar">
+ <div class="in">
+  <a href="#top">🏠 آغاز</a><a href="#s-tree">🌳 کلمہ</a><a href="#s-def">🌉 حرف</a><a href="#s-types">🃏 اقسام</a>
+  <a href="#s-rabt">🔗 ربط</a><a href="#s-atf">➕ عطف</a><a href="#s-find">🕵️ کھوج</a><a href="#s-mem">🧩 جوڑیاں</a><a href="#s-ws">📝 ورک شیٹ</a>
+  <span id="pts">⭐ ۰</span>
+ </div>
+ <div id="prog"></div>
+</div>
+
+<div class="wrap" id="top">
+
+<!-- ہیرو -->
+<section class="card hero">
+ <span class="tag">📅 تاریخ: ______________</span>
+ <h1>حرف</h1>
+ <p><b>پچھلی جماعت کا اعادہ</b> (حروفِ ربط اور حروفِ عطف)</p>
+ <p style="font-size:19px">آؤ! لفظوں کے جزیروں کے درمیان <b class="h">پل</b> بنانا سیکھیں 🌉</p>
+ <button class="btn g" onclick="document.getElementById('s-tree').scrollIntoView()">سبق شروع کریں 🚀</button>
+ <svg viewBox="0 0 900 230" xmlns="http://www.w3.org/2000/svg">
+  <g class="sun"><circle cx="760" cy="55" r="30" fill="#ffd24d"/><g stroke="#ffd24d" stroke-width="5"><path d="M760 5v16M760 89v16M710 55h16M794 55h16M725 20l11 11M784 79l11 11M795 20l-11 11M736 79l-11 11"/></g></g>
+  <ellipse cx="160" cy="50" rx="55" ry="18" fill="#fff"/><ellipse cx="200" cy="42" rx="40" ry="18" fill="#fff"/>
+  <ellipse cx="520" cy="35" rx="50" ry="16" fill="#fff"/><ellipse cx="555" cy="28" rx="36" ry="15" fill="#fff"/>
+  <g class="bird"><path d="M0 90q10-14 20 0q10-14 20 0" stroke="#345" stroke-width="3" fill="none"/></g>
+  <g class="bird2"><path d="M0 120q8-12 16 0q8-12 16 0" stroke="#345" stroke-width="3" fill="none"/></g>
+  <rect x="0" y="185" width="900" height="45" fill="#4aa8ff"/><path d="M0 200q30-14 60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0" stroke="#bfe3ff" stroke-width="4" fill="none"/>
+  <path d="M60 190q0-60 90-60t90 60z" fill="#3ba95a"/><path d="M660 190q0-60 90-60t90 60z" fill="#3ba95a"/>
+  <rect x="100" y="95" width="10" height="40" fill="#8a5a2b"/><circle cx="105" cy="90" r="22" fill="#2f9a4e"/>
+  <rect x="780" y="100" width="10" height="35" fill="#8a5a2b"/><circle cx="785" cy="95" r="20" fill="#2f9a4e"/>
+  <path d="M240 150 Q450 90 660 150" stroke="#8a5a2b" stroke-width="12" fill="none"/>
+  <g stroke="#8a5a2b" stroke-width="5"><path d="M300 134v26M360 122v38M420 117v43M480 117v43M540 122v38M600 134v26"/></g>
+  <text x="450" y="85" text-anchor="middle" font-size="30" fill="#e8334a" font-weight="bold" style="font-family:JNN,'Noto Nastaliq Urdu'">حرف = پل</text>
+ </svg>
+</section>
+
+<!-- کلمہ درخت -->
+<section class="card" id="s-tree">
+ <span class="tag">آپ کی سمجھ کے لیے</span>
+ <p>کلمہ کی <b>چھ اقسام</b> ہیں۔ <span class="h">حرف</span> ان میں سے ایک ہے۔ ہر قسم پر ٹیپ کریں اور مثالیں دیکھیں 👇</p>
+ <div class="tree">
+  <div class="tr0">کلمہ</div><div class="vl"></div>
+  <div class="trow" id="trow"></div>
+ </div>
+ <div class="info" id="tinfo">👆 کسی ڈبے پر ٹیپ کریں!</div>
+</section>
+
+<!-- حرف کی تعریف -->
+<section class="card" id="s-def">
+ <div class="title">حرف</div>
+ <div class="dfn"><b class="k">حرف</b> ایسا کلمہ جو کسی بھی جملے / فقرے میں الفاظ کے درمیان <b>ربط اور تعلق</b> پیدا کرے، حرف کہلاتا ہے۔ حرف اکیلے کوئی معنی نہیں دیتا بلکہ کلمات کے درمیان آ کر مطلب واضح کر دیتا ہے؛ جیسے: آسمان <span class="h">پر</span> پرندے، زندگی <span class="h">کے لیے</span> پانی، گھر <span class="h">تک</span> راستہ وغیرہ۔</div>
+ <div class="demo">
+  <h3>🔬 تجربہ: حرف ہٹا کر دیکھیں!</h3>
+  <div class="dsent" id="dm">زندگی <span class="h" id="dmh">کے لیے</span> پانی ضروری ہے۔</div><br>
+  <button class="btn o" id="tg">حرف ہٹائیں ✂️</button>
+  <div class="msg" id="dmsg">حرف <span class="h">کے لیے</span> پل کا کام کر رہا ہے 🌉</div>
+ </div>
+ <div class="game"><h3>🌉 کھیل ۱: صحیح پل بنائیں</h3>
+  <div>دو جزیروں (لفظوں) کے درمیان درست <b>حرفِ ربط</b> چنیں۔</div>
+  <div id="g1"></div>
+ </div>
+</section>
+
+<!-- حرف کی اقسام -->
+<section class="card" id="s-types">
+ <div class="title">حروف کی اقسام</div>
+ <p>کارڈ پر ٹیپ کر کے پلٹیں 🃏 &nbsp; (آج ہم پہلی دو قسمیں دہرائیں گے)</p>
+ <div class="grid" id="ftypes"></div>
+</section>
+
+<!-- حروفِ ربط -->
+<section class="card" id="s-rabt">
+ <div class="title" style="background:#ffd0d8">حروفِ ربط</div>
+ <div class="dfn">جو <b>اسم اور افعال</b> کے درمیان تعلق قائم کریں <b class="h">حرفِ ربط</b> کہلاتے ہیں۔ جار، اضافت، تشبیہ اور علامتِ فاعل و مفعول ان حروف میں شامل ہیں۔</div>
+ <p><b>👇 قسم چنیں، پھر حرف پر ٹیپ کر کے جملہ دیکھیں:</b></p>
+ <div class="tabs" id="rtabs"></div>
+ <div class="panel"><div id="rchips"></div><div id="rex"></div></div>
+ <div class="game"><h3>🧺 کھیل ۲: حروف کو ٹوکری میں ڈالیں</h3>
+  <div>پہلے حرف پر ٹیپ کریں (پیلا ہو جائے گا)، پھر اس کی درست ٹوکری پر ٹیپ کریں۔</div>
+  <div id="sortpool" style="text-align:center;margin:8px 0"></div>
+  <div class="buckets" id="buckets"></div>
+  <div class="msg" id="smsg"></div>
+ </div>
+ <div class="game"><h3>🌉 کھیل ۳: ربط کے مزید پل</h3><div id="g2"></div></div>
+</section>
+
+<!-- حروفِ عطف -->
+<section class="card" id="s-atf">
+ <div class="title" style="background:#c9f2d9">حروفِ عطف</div>
+ <div class="dfn">جو <b>دو لفظوں یا دو جملوں</b> کو آپس میں ملائیں <b class="h">حرفِ عطف</b> کہلاتے ہیں۔ مثلاً: اور، یا، مگر، لیکن، کیونکہ، تاکہ، لہٰذا وغیرہ۔</div>
+ <p><b>👇 حرفِ عطف کا کام چنیں اور مثال دیکھیں:</b></p>
+ <div class="tabs" id="atabs"></div>
+ <div class="panel"><div id="achips"></div><div id="aex"></div></div>
+ <div class="game"><h3>🌉 کھیل ۴: جملوں کو جوڑیں</h3>
+  <div>دونوں جملوں کے بیچ درست <b>حرفِ عطف</b> لگائیں۔</div><div id="g3"></div>
+ </div>
+</section>
+
+<!-- کھوجی -->
+<section class="card" id="s-find">
+ <div class="title" style="background:#d6ccff">🕵️ حرف جاسوس</div>
+ <p>جملے میں چھپے تمام <b>حروف</b> (ربط یا عطف) پر ٹیپ کریں، پھر <b>«جانچیں»</b> دبائیں۔ (اسم، فعل، صفت پر ٹیپ نہ کریں!)</p>
+ <div class="game" style="background:#f4f0ff;border-color:#d6ccff"><div id="finder"></div></div>
+</section>
+
+<!-- یادداشت -->
+<section class="card" id="s-mem">
+ <div class="title" style="background:#ffe0b8">🧩 جوڑیاں ملاؤ</div>
+ <p>حرف کا کارڈ اور اس کی قسم کا کارڈ ملائیں۔ کم سے کم چالوں میں جیتیں! &nbsp; <b>چالیں: <span id="mv">۰</span></b></p>
+ <div class="mem" id="mem"></div>
+ <div class="msg" id="mmsg" style="text-align:center"></div>
+ <div style="text-align:center"><button class="btn p" onclick="initMem()">دوبارہ کھیلیں 🔁</button></div>
+</section>
+
+<!-- ورک شیٹ -->
+<section class="card" id="s-ws">
+ <div class="ws-head"><h2>📝 ورک شیٹ: حرف</h2><div>حروفِ ربط اور حروفِ عطف &nbsp;|&nbsp; جماعت ہفتم &nbsp;|&nbsp; بلوم ٹیکسانومی کے چھ درجے</div></div>
+ <div class="nm"><label>نام:<input type="text" id="sn" placeholder="اپنا نام لکھیں"></label><label>رول نمبر:<input type="text" id="sr" placeholder="رول نمبر"></label></div>
+ <div class="note">ہدایت: ہر سوال غور سے پڑھیں۔ سب جواب لکھ کر آخر میں <b>«جمع کروائیں»</b> دبائیں۔ جمع کروانے کے بعد جواب تبدیل نہیں ہوں گے۔ لمبے جوابات استاد چیک کریں گے۔</div>
+ <div id="wsbody"></div>
+ <div style="text-align:center"><button class="btn g" id="sub" style="font-size:24px;padding:2px 40px">✅ جمع کروائیں</button></div>
+ <div id="res"></div>
+</section>
+
+<div class="foot">اردو • جماعت ہفتم • حرف • ✨ سیکھتے رہیں، مسکراتے رہیں ✨</div>
+</div>
+
+<script>
+document.documentElement.setAttribute('dir','rtl');document.documentElement.setAttribute('lang','ur');
+
+const $=s=>document.querySelector(s);
+const n=x=>String(x).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const mark=s=>s.replace(/\[(.+?)\]/g,'<span class="h">$1</span>');
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* آواز، پوائنٹس، کانفیٹی */
+let AC;function beep(ok){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);
+o.type='triangle';const t=AC.currentTime;if(ok){o.frequency.setValueAtTime(520,t);o.frequency.setValueAtTime(780,t+.12)}else{o.frequency.setValueAtTime(220,t);o.frequency.setValueAtTime(160,t+.12)}
+g.gain.setValueAtTime(.15,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.start();o.stop(t+.3)}catch(e){}}
+let P=0;function add(k){P+=k;$('#pts').textContent='⭐ '+n(P)}
+function confetti(){const e=['🎉','⭐','✨','🎈','🌟','🎊'];for(let i=0;i<36;i++){const s=document.createElement('div');s.className='cf';s.textContent=e[i%6];s.style.left=Math.random()*100+'vw';s.style.animationDelay=Math.random()*.8+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),4200)}}
+/* پس منظر کے تیرتے ایموجی */
+['📚','✏️','🌉','⭐','🦋','🎈','📖'].forEach((e,i)=>{const d=document.createElement('div');d.className='float';d.textContent=e;d.style.left=(8+i*14)+'%';d.style.animationDelay=(i*-2)+'s';d.style.animationDuration=(12+i*2)+'s';document.body.appendChild(d)});
+addEventListener('scroll',()=>{const h=document.documentElement;$('#prog').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%'});
+
+/* کلمہ درخت */
+const kl=[
+['اسم','کسی انسان، جگہ یا چیز کا نام','علی، لاہور، کتاب','🏷️'],
+['فعل','کام کرنا یا ہونا بتائے','پڑھنا، کھیلنا، دوڑنا','🏃'],
+['حرف','الفاظ کے درمیان ربط و تعلق پیدا کرے','[پر]، [میں]، [اور]، [تک]','🌉'],
+['صفت','اسم کی خوبی یا حالت بتائے','خوبصورت، بڑا، میٹھا','🌈'],
+['ضمیر','اسم کی جگہ استعمال ہو','وہ، میں، ہم، تم','👤'],
+['تمیز','گنتی یا ناپ تول کی اکائی بتائے','درجن، کلو، گز','⚖️']];
+kl.forEach((k,i)=>{const b=document.createElement('button');b.className='tn'+(i==2?' glow':'');b.textContent=k[3]+' '+k[0];b.onclick=()=>{document.querySelectorAll('.tn').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+$('#tinfo').innerHTML=`<b style="font-size:26px">${k[3]} ${k[0]}</b><br>${k[1]}<br><b>مثالیں:</b> ${mark(k[2])}`+(i==2?'<br>⭐ <b>آج کا موضوع یہی ہے!</b>':'');beep(true);add(1)};$('#trow').appendChild(b)});
+
+/* حرف ہٹانے کا تجربہ */
+let rem=false;$('#tg').onclick=()=>{rem=!rem;const d=$('#dm');d.classList.toggle('broken',rem);
+$('#dmh').outerHTML=rem?'<span class="gap" id="dmh">؟؟؟</span>':'<span class="h" id="dmh">کے لیے</span>';
+$('#tg').textContent=rem?'حرف واپس لائیں 🌉':'حرف ہٹائیں ✂️';
+$('#dmsg').innerHTML=rem?'ہائے! جزیرے الگ ہو گئے، <b>مطلب واضح نہیں</b> رہا 😟':'واہ! پل واپس آ گیا، مطلب پھر <b>واضح</b> ہو گیا ✅';beep(!rem)};
+
+/* پل کھیل */
+function makeChoice(root,rounds){
+ let i=0,first=true,done=false,stars=0;const box=document.getElementById(root);
+ function render(){const r=rounds[i];first=true;done=false;
+  box.innerHTML=`<div class="rd">سوال ${n(i+1)} / ${n(rounds.length)}</div>
+  <div class="scene"><div class="isl">${r.l}</div><div class="slot">؟</div><div class="isl">${r.r}</div></div>
+  <div class="opts">${shuffle(r.o).map(o=>`<button class="chip">${o}</button>`).join('')}</div>
+  <div class="msg"></div><div style="text-align:center"><button class="btn" style="display:none">اگلا ➜</button></div>`;
+  const slot=box.querySelector('.slot'),msg=box.querySelector('.msg'),nx=box.querySelector('.btn');
+  box.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{if(done||c.classList.contains('bad'))return;
+   if(c.textContent===r.a){done=true;slot.textContent=r.a;slot.classList.add('ok');c.classList.add('good');beep(true);
+    if(first){stars++;add(10)}else add(4);
+    msg.innerHTML='🎉 <b>شاباش!</b> '+mark(r.s);nx.style.display='';nx.textContent=i<rounds.length-1?'اگلا ➜':'نتیجہ 🏆';
+   }else{first=false;c.classList.add('bad','shake');beep(false);msg.innerHTML='🤔 دوبارہ سوچیں! اشارہ: '+r.h}});
+  nx.onclick=()=>{if(i<rounds.length-1){i++;render()}else finish()}}
+ function finish(){confetti();box.innerHTML=`<div style="text-align:center;font-size:24px">🏆 کھیل مکمل!<br>پہلی کوشش میں درست: <b class="h">${n(stars)}</b> / ${n(rounds.length)}<br>${'⭐'.repeat(stars)}<br><button class="btn g">دوبارہ کھیلیں 🔁</button></div>`;
+  box.querySelector('.btn').onclick=()=>{i=0;stars=0;render()}}
+ render()}
+makeChoice('g1',[
+{l:'پرندے آسمان',r:'اڑتے ہیں',a:'پر',o:['پر','اور','نے'],s:'پرندے آسمان [پر] اڑتے ہیں۔',h:'جگہ بتانے والا لفظ'},
+{l:'علی',r:'کتاب پڑھی',a:'نے',o:['نے','تک','اور'],s:'علی [نے] کتاب پڑھی۔',h:'کام کرنے والے (فاعل) کی علامت'},
+{l:'زندگی کے',r:'پانی ضروری ہے',a:'لیے',o:['لیے','تک','کو'],s:'زندگی کے [لیے] پانی ضروری ہے۔',h:'مقصد بتانے والا لفظ'},
+{l:'ہم مسجد',r:'پیدل گئے',a:'تک',o:['تک','کا','کو'],s:'ہم مسجد [تک] پیدل گئے۔',h:'آخری حد بتائیں'}]);
+makeChoice('g2',[
+{l:'یہ علی',r:'بستہ ہے',a:'کا',o:['کا','میں','نے'],s:'یہ علی [کا] بستہ ہے۔',h:'ملکیت ظاہر کریں (اضافت)'},
+{l:'ماں نے بچے',r:'سلایا',a:'کو',o:['کو','نے','کا'],s:'ماں نے بچے [کو] سلایا۔',h:'علامتِ مفعول'},
+{l:'کتاب بستے',r:'ہے',a:'میں',o:['میں','نے','جیسا'],s:'کتاب بستے [میں] ہے۔',h:'اندر ہونا'},
+{l:'عمر شیر',r:'بہادر ہے',a:'جیسا',o:['جیسا','کا','پر'],s:'عمر شیر [جیسا] بہادر ہے۔',h:'مشابہت / تشبیہ'},
+{l:'بلی میز کے',r:'بیٹھی ہے',a:'نیچے',o:['نیچے','نے','اور'],s:'بلی میز کے [نیچے] بیٹھی ہے۔',h:'جگہ کی سمت'}]);
+makeChoice('g3',[
+{l:'میں نے پانی پیا',r:'روٹی کھائی',a:'اور',o:['اور','مگر','تاکہ'],s:'میں نے پانی پیا [اور] روٹی کھائی۔',h:'دونوں کام ساتھ ملانے ہیں'},
+{l:'وہ بہت تیز دوڑا',r:'ریس ہار گیا',a:'لیکن',o:['اور','لیکن','لہٰذا'],s:'وہ بہت تیز دوڑا [لیکن] ریس ہار گیا۔',h:'بات اُلٹ ہو گئی (تضاد)'},
+{l:'ہمیں محنت کرنی چاہیے',r:'کامیاب ہو سکیں',a:'تاکہ',o:['تاکہ','مگر','یا'],s:'ہمیں محنت کرنی چاہیے [تاکہ] کامیاب ہو سکیں۔',h:'مقصد'},
+{l:'تم چائے لو گے',r:'شربت؟',a:'یا',o:['یا','اور','لہٰذا'],s:'تم چائے لو گے [یا] شربت؟',h:'ایک کو چننا ہے'},
+{l:'بارش ہو رہی تھی',r:'ہم گھر پر رہے',a:'لہٰذا',o:['لہٰذا','بلکہ','یا'],s:'بارش ہو رہی تھی [لہٰذا] ہم گھر پر رہے۔',h:'نتیجہ ظاہر کریں'},
+{l:'ہم دیر سے پہنچے',r:'ٹریفک بہت تھا',a:'کیونکہ',o:['کیونکہ','یا','اور'],s:'ہم دیر سے پہنچے [کیونکہ] ٹریفک بہت تھا۔',h:'وجہ بتائیں'}]);
+
+/* اقسام فلپ کارڈ */
+const ft=[['حروفِ ربط','🔗','linear-gradient(135deg,#ff6b81,#e8334a)','#e8334a','اسم اور فعل کے درمیان تعلق بنائیں۔<br>مثال: [میں]، [سے]، [پر]، [کا]، [نے]، [کو]',1],
+['حروفِ عطف','➕','linear-gradient(135deg,#3fd48a,#1d9d5d)','#1d9d5d','دو لفظوں یا جملوں کو ملائیں۔<br>مثال: [اور]، [مگر]، [لیکن]، [یا]، [کیونکہ]',1],
+['حروفِ تخصیص','🎯','linear-gradient(135deg,#ffa94d,#e67700)','#e67700','بات کو خاص کریں یا زور دیں۔<br>مثال: [ہی]، [بھی]، [صرف]، [فقط]',0],
+['حروفِ فجائیہ','😲','linear-gradient(135deg,#9775fa,#6741d9)','#6741d9','خوشی، حیرت یا غم ظاہر کریں۔<br>مثال: [واہ]! [ہائے]! [شاباش]! [افسوس]!',0]];
+ft.forEach(f=>{const d=document.createElement('div');d.className='fc';d.innerHTML=`<div class="fi"><div class="ff" style="background:${f[2]}">${f[5]?'<span class="rib">آج کا سبق ✔</span>':'<span class="rib">آگے پڑھیں گے</span>'}<div class="em">${f[1]}</div><b>${f[0]}</b></div><div class="fb" style="border-color:${f[3]}">${mark(f[4])}</div></div>`;d.onclick=()=>{d.classList.toggle('on');beep(true)};$('#ftypes').appendChild(d)});
+
+/* ٹیب + چپس + مثالیں */
+function tabsUI(tabsId,chipsId,exId,data,col){
+ const T=$(tabsId),C=$(chipsId),E=$(exId);
+ Object.keys(data).forEach((k,i)=>{const b=document.createElement('button');b.className='tab';b.textContent=data[k].ic+' '+k;b.onclick=()=>show(k,b);T.appendChild(b);if(i==0)setTimeout(()=>show(k,b),0)});
+ function show(k,b){T.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');const d=data[k];
+  E.innerHTML=`<div class="note" style="margin:6px 0">${d.d}</div>`;C.innerHTML='';
+  Object.keys(d.w).forEach(w=>{const c=document.createElement('button');c.className='chip';c.textContent=w;c.onclick=()=>{C.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');
+   const old=E.querySelector('.ex');if(old)old.remove();const x=document.createElement('div');x.className='ex';x.style.borderColor=col;x.innerHTML='✏️ '+mark(d.w[w]);E.appendChild(x);beep(true)};C.appendChild(c)})}}
+tabsUI('#rtabs','#rchips','#rex',{
+'جار':{ic:'📍',d:'جار: جگہ، سمت یا ساتھ بتانے والے حروف۔',w:{'میں':'کتاب بستے [میں] ہے۔','سے':'میں گھر [سے] نکلا۔','پر':'پرندہ شاخ [پر] بیٹھا ہے۔','پہ':'چڑیا چھت [پہ] بیٹھی ہے۔','تک':'ہم مسجد [تک] پیدل گئے۔','تلک':'وہ شام [تلک] انتظار کرتا رہا۔','اوپر':'پتنگ آسمان کے [اوپر] اڑ رہی ہے۔','اندر':'بچہ کمرے کے [اندر] ہے۔','بیچ':'ہم دونوں کے [بیچ] دوستی ہے۔','درمیان':'کھیت کے [درمیان] کنواں ہے۔','ساتھ':'میں دوست کے [ساتھ] گیا۔','لیے':'زندگی کے [لیے] پانی ضروری ہے۔','نیچے':'بلی میز کے [نیچے] ہے۔','پاس':'کتاب میرے [پاس] ہے۔','تلے':'ہم درخت کے [تلے] بیٹھے۔','آگے':'وہ مجھ سے [آگے] تھا۔'}},
+'اضافت':{ic:'🤝',d:'اضافت (کا، کی، کے): دو اسموں کے درمیان تعلق یا ملکیت بتاتے ہیں۔ مذکر کے لیے «کا»، مؤنث کے لیے «کی» اور جمع/حالتِ غیر میں «کے»۔',w:{'کا':'علی [کا] بستہ نیا ہے۔','کی':'سارہ [کی] کتاب میز پر ہے۔','کے':'بچوں [کے] کھلونے ٹوٹ گئے۔'}},
+'تشبیہ':{ic:'🪞',d:'تشبیہ: ایک چیز کو دوسری کے مشابہ بتانے والے حروف۔',w:{'ایسا':'مجھے [ایسا] ہی قلم چاہیے۔','ویسا':'اسے بھی [ویسا] ہی تحفہ ملا۔','ہو بہو':'یہ تصویر [ہو بہو] اصل لگتی ہے۔','مانند':'اس کا چہرہ چاند کے [مانند] روشن ہے۔','جیسا':'عمر شیر [جیسا] بہادر ہے۔','جیسے':'وہ بچوں [جیسے] خوش ہوا۔'}},
+'علامتِ فاعل':{ic:'🙋',d:'علامتِ فاعل «نے»: کام کرنے والے کے ساتھ آتی ہے (ماضی میں متعدی فعل کے ساتھ)۔',w:{'نے':'علی [نے] خط لکھا۔'}},
+'علامتِ مفعول':{ic:'🎯',d:'علامتِ مفعول «کو»: جس پر کام واقع ہو اس کے ساتھ آتی ہے۔',w:{'کو':'ماں نے بچے [کو] سلایا۔'}}},'#2fb36b');
+tabsUI('#atabs','#achips','#aex',{
+'ملانے والے':{ic:'🔗',d:'دو چیزوں یا کاموں کو آپس میں جوڑتے ہیں۔',w:{'اور':'علی [اور] احمد کھیل رہے ہیں۔','و':'ماں [و] باپ کی خدمت کرو۔','نیز':'وہ شاعر ہے [نیز] ادیب بھی۔','پھر':'ہم نے کھانا کھایا [پھر] سو گئے۔'}},
+'چننے والے':{ic:'🔀',d:'دو میں سے ایک کو چننے کا موقع دیتے ہیں۔',w:{'یا':'تم چائے لو گے [یا] دودھ؟','خواہ':'[خواہ] بارش ہو، ہم جائیں گے۔'}},
+'تضاد والے':{ic:'↔️',d:'پہلی بات کے برعکس بات بتاتے ہیں۔',w:{'مگر':'وہ آیا [مگر] دیر سے۔','لیکن':'میں نے محنت کی [لیکن] نتیجہ دیر سے آیا۔','بلکہ':'وہ سست نہیں [بلکہ] محنتی ہے۔'}},
+'وجہ بتانے والے':{ic:'❓',d:'کسی کام کی وجہ یا مقصد بتاتے ہیں۔',w:{'کیونکہ':'میں نہیں گیا [کیونکہ] بیمار تھا۔','چونکہ':'[چونکہ] بارش تھی، میچ رک گیا۔','تاکہ':'محنت کرو [تاکہ] کامیاب ہو جاؤ۔'}},
+'نتیجہ بتانے والے':{ic:'🏁',d:'پچھلی بات کا نتیجہ بتاتے ہیں۔',w:{'لہٰذا':'بارش ہو رہی تھی [لہٰذا] ہم گھر رہے۔','چنانچہ':'اس نے محنت کی [چنانچہ] کامیاب ہوا۔'}}},'#e67700');
+
+/* ٹوکری کھیل */
+(function(){
+ const B=[['جار','#3b5bdb'],['اضافت','#e67700'],['تشبیہ','#7b4bdb'],['علامتِ فاعل','#e8334a'],['علامتِ مفعول','#2fb36b']];
+ const items=[['میں',0],['تک',0],['نیچے',0],['اوپر',0],['کا',1],['کی',1],['کے',1],['جیسا',2],['مانند',2],['ہو بہو',2],['نے',3],['کو',4]];
+ let sel=null,left=items.length;
+ const pool=$('#sortpool'),bk=$('#buckets');
+ B.forEach((b,i)=>{const d=document.createElement('div');d.className='bk';d.style.borderColor=b[1];d.innerHTML=`<h4 style="color:${b[1]}">${b[0]}</h4>`;
+  d.onclick=()=>{if(!sel)return;if(sel.i===i){const c=sel.el;c.classList.remove('sel');c.classList.add('good');d.appendChild(c);c.onclick=null;beep(true);add(5);left--;sel=null;$('#smsg').textContent='✅ درست!';
+    if(!left){$('#smsg').innerHTML='🏆 زبردست! تمام حروف صحیح ٹوکریوں میں! ';confetti()}}
+   else{beep(false);d.classList.add('shake');setTimeout(()=>d.classList.remove('shake'),400);$('#smsg').textContent='❌ یہ اس ٹوکری کا نہیں، دوبارہ سوچیں۔'}};bk.appendChild(d)});
+ shuffle(items).forEach(it=>{const c=document.createElement('button');c.className='chip';c.textContent=it[0];c.onclick=()=>{pool.querySelectorAll('.chip,.bk .chip').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');sel={i:it[1],el:c};beep(true)};pool.appendChild(c)});
+})();
+
+/* حرف جاسوس */
+function makeFinder(box,sents,opt){
+ opt=opt||{};let i=0,checked=false;
+ function render(){checked=false;const s=sents[i];
+  box.innerHTML=`<div class="rd">جملہ ${n(i+1)} / ${n(sents.length)}</div><div style="text-align:center" class="tks"></div><div class="msg" style="text-align:center"></div>
+  <div style="text-align:center"><button class="btn o chk">🔍 جانچیں</button> <button class="btn nxt" style="display:none">اگلا ➜</button></div>`;
+  const tks=box.querySelector('.tks');
+  s.split(' ').forEach(w=>{const h=w[0]==='*';const t=document.createElement('span');t.className='tk';t.dataset.h=h?1:0;t.textContent=h?w.slice(1):w;t.onclick=()=>{if(checked)return;t.classList.toggle('sel')};tks.appendChild(t)});
+  box.querySelector('.chk').onclick=()=>{if(checked)return;checked=true;let ok=0,bad=0,tot=0;
+   tks.querySelectorAll('.tk').forEach(t=>{const h=t.dataset.h==1,sl=t.classList.contains('sel');t.classList.remove('sel');if(h){tot++;if(sl){t.classList.add('good');ok++}else t.classList.add('miss')}else if(sl){t.classList.add('bad');bad++}});
+   add(ok*5);beep(ok==tot&&!bad);const m=box.querySelector('.msg');
+   m.innerHTML=ok==tot&&!bad?'🎉 <b>کمال!</b> سب حروف پکڑ لیے':`حروف ملے: <b>${n(ok)}/${n(tot)}</b> ${bad?'| غلط نشان: '+n(bad):''} — سبز=درست، نارنجی ڈبہ=رہ گیا، سرخ=غلط`;
+   const nx=box.querySelector('.nxt');nx.style.display='';nx.textContent=i<sents.length-1?'اگلا ➜':'دوبارہ 🔁';if(ok==tot&&!bad&&i==sents.length-1)confetti()};
+  box.querySelector('.nxt').onclick=()=>{i=(i+1)%sents.length;render()}}
+ render()}
+makeFinder($('#finder'),[
+'علی *نے کتاب میز *پر رکھی *اور باہر چلا گیا۔',
+'ماں *نے بچے *کو دودھ دیا۔',
+'احمد *کا بستہ بہت بھاری ہے *مگر وہ خوش ہے۔',
+'چڑیا درخت *سے اڑی *اور چھت *تک پہنچی۔',
+'عمر شیر *جیسا بہادر ہے *لیکن دل *کا نرم ہے۔']);
+
+/* یادداشت کھیل */
+const pairs=[['میں','جار'],['کا','اضافت'],['جیسا','تشبیہ'],['نے','علامتِ فاعل'],['کو','علامتِ مفعول'],['اور','حرفِ عطف']];
+let fl=[],mv=0,lock=false,mt=0;
+function initMem(){const g=$('#mem');g.innerHTML='';fl=[];mv=0;mt=0;lock=false;$('#mv').textContent='۰';$('#mmsg').textContent='';
+ const cards=[];pairs.forEach((p,i)=>{cards.push({id:i,t:p[0],c:'#e8334a'});cards.push({id:i,t:p[1],c:'#3b5bdb'})});
+ shuffle(cards).forEach(c=>{const d=document.createElement('div');d.className='fc';d.innerHTML=`<div class="fi"><div class="ff">❓</div><div class="fb" style="border-color:${c.c}">${c.t}</div></div>`;d.dataset.id=c.id;
+  d.onclick=()=>{if(lock||d.classList.contains('on'))return;d.classList.add('on');fl.push(d);beep(true);
+   if(fl.length==2){mv++;$('#mv').textContent=n(mv);const[a,b]=fl;fl=[];
+    if(a.dataset.id===b.dataset.id){a.classList.add('done');b.classList.add('done');add(8);mt++;if(mt==pairs.length){$('#mmsg').innerHTML=`🏆 مبارک! ${n(mv)} چالوں میں مکمل`;confetti()}}
+    else{lock=true;setTimeout(()=>{a.classList.remove('on');b.classList.remove('on');lock=false},900)}}};g.appendChild(d)})}
+initMem();
+
+/* ورک شیٹ – بلوم ٹیکسانومی */
+const WS=[
+{t:'۱) یاد کرنا (Remember)',e:'🧠',c:'#3b5bdb',q:[
+ {k:'mcq',q:'حرف کی درست تعریف کون سی ہے؟',o:['وہ کلمہ جو کسی چیز کا نام بتائے','وہ کلمہ جو الفاظ کے درمیان ربط اور تعلق پیدا کرے','وہ کلمہ جو کام کرنا بتائے','وہ کلمہ جو اسم کی خوبی بتائے'],a:1},
+ {k:'text',q:'کلمہ کی کل ____ اقسام ہیں۔',a:['چھ','6','۶','٦']},
+ {k:'mcq',q:'«نے» کون سی علامت ہے؟',o:['علامتِ مفعول','علامتِ فاعل','اضافت','تشبیہ'],a:1},
+ {k:'long',q:'حروفِ ربط کی کوئی چار مثالیں لکھیں۔',m:'میں، سے، پر، تک (اس کے علاوہ: کا، کی، کے، نے، کو، جیسا، مانند وغیرہ)۔'}]},
+{t:'۲) سمجھنا (Understand)',e:'💡',c:'#2fb36b',q:[
+ {k:'long',q:'حرف اکیلا کوئی معنی کیوں نہیں دیتا؟ اپنے الفاظ میں لکھیں۔',m:'حرف کا کام صرف لفظوں کو جوڑنا ہے۔ اکیلا «پر» یا «تک» کسی چیز یا کام کا نام نہیں بتاتا؛ جملے میں اسم یا فعل کے ساتھ آ کر ہی مطلب واضح کرتا ہے۔'},
+ {k:'mcq',q:'«جیسا» اور «مانند» حروفِ ربط کی کس قسم میں شامل ہیں؟',o:['جار','تشبیہ','اضافت','علامتِ فاعل'],a:1},
+ {k:'mcq',q:'حروفِ عطف کا بنیادی کام کیا ہے؟',o:['اسم کی جگہ آنا','دو لفظوں یا جملوں کو آپس میں ملانا','کام کا وقت بتانا','خوشی ظاہر کرنا'],a:1},
+ {k:'long',q:'«کا، کی، کے» کو اضافت کیوں کہتے ہیں؟ ایک مثال بھی دیں۔',m:'یہ دو اسموں کے درمیان تعلق یا ملکیت ظاہر کرتے ہیں۔ مثال: علی کا بستہ، سارہ کی کتاب، بچوں کے کھلونے۔'}]},
+{t:'۳) اطلاق (Apply)',e:'🛠️',c:'#e67700',q:[
+ {k:'sel',q:'ہم سکول ____ پیدل گئے۔',o:['تک','نے','کا'],a:0},
+ {k:'sel',q:'یہ کتاب احمد ____ ہے۔',o:['تک','کی','نے'],a:1},
+ {k:'sel',q:'استاد ____ سبق سمجھایا۔',o:['میں','کا','نے'],a:2},
+ {k:'sel',q:'بلی میز کے ____ بیٹھی ہے۔',o:['نیچے','نے','اور'],a:0},
+ {k:'long',q:'حرفِ عطف «لیکن» استعمال کرتے ہوئے ایک جملہ بنائیں۔',m:'نمونہ: میں نے بہت محنت کی لیکن نتیجہ ابھی نہیں آیا۔'}]},
+{t:'۴) تجزیہ (Analyze)',e:'🔍',c:'#7b4bdb',q:[
+ {k:'finder',q:'جملے میں موجود تمام حروف پر ٹیپ کریں (ہر درست حرف کا نصف نمبر، کل ۲ نمبر)۔',s:'بچوں *نے باغ *میں پھول توڑے *لیکن مالی *نے انہیں منع کیا۔',m:2},
+ {k:'long',q:'حروفِ ربط اور حروفِ عطف میں دو فرق لکھیں۔',m:'ربط: اسم اور فعل کے درمیان تعلق بناتے ہیں (میں، سے، کا، نے)۔ عطف: دو لفظوں یا جملوں کو آپس میں ملاتے ہیں (اور، لیکن، یا، کیونکہ)۔ عطف جملوں کو بھی جوڑ سکتا ہے۔'},
+ {k:'mcq',q:'جملہ «وہ آیا مگر دیر سے» میں «مگر» کیا ظاہر کر رہا ہے؟',o:['نتیجہ','وجہ','اختلاف / تضاد','انتخاب'],a:2},
+ {k:'mcq',q:'«ماں نے بچے کو دودھ دیا۔» اس جملے میں کتنے حروف ہیں؟',o:['۱','۲','۳','۴'],a:1}]},
+{t:'۵) جانچنا (Evaluate)',e:'⚖️',c:'#e8334a',q:[
+ {k:'sel',q:'جملہ «علی کتاب پڑھی۔» ____ ہے۔',o:['درست','غلط'],a:1},
+ {k:'long',q:'اوپر والے جملے کی غلطی بتائیں اور اسے درست کر کے لکھیں۔',m:'فاعل «علی» کے ساتھ علامتِ فاعل «نے» غائب ہے۔ درست جملہ: علی نے کتاب پڑھی۔'},
+ {k:'sel',q:'بیان: «حرف کے بغیر جملے کا مطلب ہمیشہ مکمل رہتا ہے۔» یہ بیان ____ ہے۔',o:['صحیح','غلط'],a:1},
+ {k:'long',q:'کون سا جملہ بہتر ہے اور کیوں؟ (الف) میں نے کھانا کھایا اور سو گیا۔ (ب) میں نے کھانا کھایا مگر سو گیا۔',m:'(الف) بہتر ہے کیونکہ دونوں کام ایک کے بعد ایک ہوئے، اس لیے ملانے والا «اور» مناسب ہے۔ «مگر» تضاد ظاہر کرتا ہے جو یہاں نہیں ہے۔'}]},
+{t:'۶) تخلیق (Create)',e:'🎨',c:'#0c8599',q:[
+ {k:'long',q:'اپنے دوست کے نام چار جملوں کا پیغام لکھیں جس میں کم از کم پانچ حروف (ربط یا عطف) ہوں۔ حروف کے نیچے لکیر کھینچنے کے بجائے انہیں [قوسین] میں لکھیں۔',m:'نمونہ: پیارے احمد! میں [اور] میرا بھائی کل تمہارے گھر [تک] آئیں گے [لیکن] بارش [کے] سبب دیر ہو سکتی ہے۔ ہم [تاکہ] جلد پہنچیں، صبح نکلیں گے۔'},
+ {k:'long',q:'حروفِ عطف (اور، لیکن، یا، کیونکہ) میں سے ہر ایک کے ساتھ ایک ایک جملہ بنائیں۔',m:'کوئی بھی درست جملے، مثلاً: علی اور سارہ آئے۔ میں گیا لیکن وہ نہ ملا۔ چائے لو گے یا دودھ؟ میں نہیں آیا کیونکہ بیمار تھا۔'},
+ {k:'long',q:'حروفِ ربط کی قسمیں یاد رکھنے کے لیے ایک چھوٹی نظم، نعرہ یا یادداشتی ترکیب خود بنائیں۔',m:'آپ کی اپنی تخلیق! مثال: «جار، اضافت، تشبیہ، نے اور کو ۔ ربط کے پانچ ساتھی، یاد رکھو!»'}]}];
+
+let WQ=[],tot=0;
+(function(){const root=$('#wsbody');let qi=0;
+ WS.forEach(L=>{const d=document.createElement('div');d.className='lv';d.style.borderColor=L.c;
+  d.innerHTML=`<div class="hd" style="background:${L.c}"><span>${L.e} ${L.t}</span></div><div class="bd"></div>`;const bd=d.querySelector('.bd');
+  L.q.forEach((q,j)=>{const id='q'+(qi++);const e=document.createElement('div');e.className='q';let h=`<div class="qt">${n(j+1)}۔ ${q.q}</div>`;
+   if(q.k=='mcq'){h+=q.o.map((o,x)=>`<label class="op"><input type="radio" name="${id}" value="${x}">${o}</label>`).join('');tot+=1}
+   else if(q.k=='sel'){h+=`<select name="${id}"><option value="">— منتخب کریں —</option>${q.o.map((o,x)=>`<option value="${x}">${o}</option>`).join('')}</select>`;tot+=1}
+   else if(q.k=='text'){h+=`<input type="text" name="${id}" autocomplete="off" placeholder="جواب لکھیں">`;tot+=1}
+   else if(q.k=='long'){h+=`<textarea name="${id}" placeholder="یہاں اپنا جواب لکھیں..."></textarea>`}
+   else if(q.k=='finder'){h+=`<div class="tks" style="text-align:center"></div>`;tot+=q.m}
+   h+=`<div class="ans"></div>`;e.innerHTML=h;bd.appendChild(e);
+   if(q.k=='finder'){const tks=e.querySelector('.tks');q.s.split(' ').forEach(w=>{const hh=w[0]==='*';const t=document.createElement('span');t.className='tk';t.dataset.h=hh?1:0;t.textContent=hh?w.slice(1):w;t.onclick=()=>{if(!e.dataset.lock)t.classList.toggle('sel')};tks.appendChild(t)})}
+   WQ.push({id,q,e})});
+  root.appendChild(d)})})();
+
+let submitted=false;
+$('#sub').onclick=()=>{if(submitted)return;
+ if(!$('#sn').value.trim()){const r=$('#res');r.style.display='block';r.textContent='پہلے اپنا نام لکھیں 😊';$('#sn').focus();return}
+ if(!window._cf){window._cf=1;$('#sub').textContent='⚠️ کیا یقینی ہیں؟ جمع کروانے کے لیے دوبارہ دبائیں';setTimeout(()=>{if(!submitted){window._cf=0;$('#sub').textContent='✅ جمع کروائیں'}},6000);return}
+ $('#res').style.display='none';$('#sub').textContent='✅ جمع ہو گیا';
+ submitted=true;let sc=0;
+ WQ.forEach(({id,q,e})=>{const ans=e.querySelector('.ans');ans.style.display='block';let ok=null;e.dataset.lock=1;
+  e.querySelectorAll('input,select,textarea').forEach(x=>x.disabled=true);
+  if(q.k=='mcq'){const c=e.querySelector('input:checked');ok=c&&+c.value===q.a;ans.innerHTML=ok?'✅ درست':'✔ درست جواب: <b>'+q.o[q.a]+'</b>'}
+  else if(q.k=='sel'){const v=e.querySelector('select').value;ok=v!==''&&+v===q.a;ans.innerHTML=ok?'✅ درست':'✔ درست جواب: <b>'+q.o[q.a]+'</b>'}
+  else if(q.k=='text'){const v=e.querySelector('input').value.trim();ok=q.a.includes(v);ans.innerHTML=ok?'✅ درست':'✔ درست جواب: <b>'+q.a[0]+'</b>'}
+  else if(q.k=='finder'){let h=0,b=0,t=0;e.querySelectorAll('.tk').forEach(k=>{const hh=k.dataset.h==1,s=k.classList.contains('sel');k.classList.remove('sel');if(hh){t++;if(s){h++;k.classList.add('good')}else k.classList.add('miss')}else if(s){b++;k.classList.add('bad')}});
+   const pts=Math.round(Math.max(0,h-b)/t*q.m*2)/2;sc+=pts;ok=pts==q.m;ans.innerHTML=`حاصل کردہ: <b>${n(pts)}</b> / ${n(q.m)} — درست حروف: ${n(t)}`}
+  else{ans.innerHTML='📖 <b>نمونہ جواب:</b> '+q.m+'<br><small>اپنے جواب کا موازنہ کریں؛ استاد اس کے نمبر لگائیں گے۔</small>';ans.style.background='#e8f4ff'}
+  if(ok===true){sc+=(q.k=='finder'?0:1);e.classList.add('ok')}else if(ok===false)e.classList.add('no');});
+ sc=Math.round(sc*2)/2;const pc=sc/tot*100;
+ const r=$('#res');r.style.display='block';
+ r.innerHTML=`🎓 <b>${$('#sn').value}</b><br>معروضی سوالات میں آپ کے نمبر: <b class="h">${n(sc)}</b> / ${n(tot)} (${n(Math.round(pc))}٪)<br>${pc>=80?'🏆 شاندار! آپ حرف کے ماہر ہیں!':pc>=60?'👏 بہت خوب! تھوڑی مزید مشق کریں۔':'💪 ہمت نہ ہاریں! سبق دوبارہ دیکھیں اور کھیل کھیلیں۔'}<br><small style="font-size:16px">لمبے جوابات کے نمبر استاد دیں گے۔</small>`;
+ add(Math.round(sc)*3);if(pc>=60)confetti();r.scrollIntoView({behavior:'smooth',block:'center'})};
+
+/* پرنٹ / محفوظ / کاپی روکنے کی کوشش */
+document.addEventListener('contextmenu',e=>e.preventDefault());
+['copy','cut','dragstart'].forEach(ev=>document.addEventListener(ev,e=>{if(!/INPUT|TEXTAREA/.test(e.target.tagName))e.preventDefault()}));
+document.addEventListener('keydown',e=>{const k=e.key.toLowerCase();
+ if((e.ctrlKey||e.metaKey)&&['p','s','u'].includes(k)||k==='f12'||((e.ctrlKey||e.metaKey)&&e.shiftKey&&['i','j','c'].includes(k))){e.preventDefault();e.stopPropagation();return false}
+ if(k==='printscreen'){try{navigator.clipboard.writeText('')}catch(x){}}});
+window.addEventListener('beforeprint',()=>{document.body.style.visibility='hidden'});
+window.addEventListener('afterprint',()=>{document.body.style.visibility='visible'});
+</script>
+
+</body></html>
